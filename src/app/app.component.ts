@@ -17,29 +17,28 @@ export class AppComponent {
   customer: any = {};
 
   user = new User();
-  isLogged;
+  parameter: string;
+  customerList: Object[];
+  isLogged = false;
 
   login() {
-    this.httpService.login(this.user);
+    this.httpService.login(this.user).subscribe(data => {
+      if (data === 'Success') {
+        this.isLogged = true;
+      }
+    });
+
   }
 
-  getCustomer() {
-    this.httpService.getById(140);
+  search() {
+    this.httpService.search(this.parameter).subscribe(data => this.customerList = data);
   }
 
-  getAsyncData() {
-    // Fake Slow Async Data
-    return of({
-      firstName: 'Luke',
-      lastName: 'Skywalker',
-      age: 65,
-      height: 172,
-      mass: 77,
-      homeworld: 'Tatooine'
-    }).pipe(
-      delay(2000)
-    );
-  }
+  // getCustomer() {
+  //   this.httpService.getById(140);
+  // }
+
+
   constructor(@Inject('HttpInterface') private httpService: HttpInterface) {
 
 

@@ -8,17 +8,21 @@ import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {HttpInterface} from "./service/http.interface";
 import {HttpService} from "./service/http.service";
+import { CustomerComponent } from './customer/customer.component';
+import {AppRoutingModule} from './app-routing-module';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CustomerComponent
   ],
   imports: [
     BrowserModule,
     CommonModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [
     {

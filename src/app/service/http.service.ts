@@ -10,22 +10,9 @@ export class HttpService implements HttpInterface {
 
   constructor(private httpClient: HttpClient) {
   }
-result
-  getById(customerId: number) {
-     this.httpClient.get(`http://net47.tsunami.pl/customer/loginpasswd?CustomerID=` + customerId, {
-       withCredentials: true
-     }).subscribe(data => this.result = data,(err: HttpErrorResponse) => {
-       if (err.error instanceof Error) {
-         // A client-side or network error occurred. Handle it accordingly.
-         console.log('An error occurred:', err.error.message);
-       } else {
-         // The backend returned an unsuccessful response code.
-         // The response body may contain clues as to what went wrong,
-         console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
-       }
-     });
-     console.log(this.result);
-  }
+
+  result;
+  body;
 
   login(credintials: User) {
     console.log(credintials);
@@ -34,11 +21,28 @@ result
     // formData.append('password', credintials.password);
     // let headers = new Headers();
     // headers.append('Access-Control-Allow-Headers', 'Access-Control-Allow-Origin');
-    const body = 'username=' + credintials.username + '&password=' + credintials.password;
-    this.httpClient.post(`http://net47.tsunami.pl/login`, body, {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8;responseType: text'},
-      withCredentials: true
-    }).subscribe(data => console.log(data));
+    this.body = 'username=' + credintials.username + '&password=' + credintials.password;
+    return this.httpClient.post(`http://net47.tsunami.pl/login`, this.body,
+      {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8;'},
+        responseType: 'text',
+        withCredentials: true
+
+      });
   }
 
+  search(parameter: string) {
+    this.body = 'term=' + parameter;
+    return this.httpClient.post(`http://net47.tsunami.pl/customer/ajaxsearch`, this.body, {
+      headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8;responseType: text'},
+      withCredentials: true
+    });
+  }
+
+  getById(customerId: number) {
+    return this.httpClient.get(`http://net47.tsunami.pl/customer/loginpasswd?CustomerID=` + customerId, {
+      withCredentials: true
+    });
+
+  }
 }

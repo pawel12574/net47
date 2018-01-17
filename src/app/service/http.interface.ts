@@ -5,5 +5,6 @@ import {User} from "../model/user";
 export interface HttpInterface {
 
   getById(customerId: number);
+  search(parameter: string);
   login(user: User);
 }
