@@ -14,9 +14,7 @@ export class CustomerComponent implements OnInit {
   @Input() customer: Observable<any>;
 
   constructor(private route: ActivatedRoute,
-              @Inject('HttpInterface') private httpService: HttpInterface,
-              // private location: Location
-  ) {
+              @Inject('HttpInterface') private httpService: HttpInterface,) {
   }
 
   ngOnInit(): void {
